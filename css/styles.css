@@ -1,0 +1,722 @@
+/* --- NUEVO: Variables de Color para Temas --- */
+:root {
+    /* Tema Oscuro (por defecto) */
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --container-bg: #1a1a1a;
+    --container-hover: #252525;
+    --border-color: #333;
+    --input-bg: #222;
+    --input-border: #555;
+    --focus-border: #4a90e2;
+    --text-muted: #999;
+    --text-subtle: #a0a0a0;
+    --title-color: #a2b9d1;
+    --completed-text: #777;
+}
+
+body.light-mode {
+    /* Tema Claro */
+    --bg-color: #f0f2f5;
+    --text-color: #1c1e21;
+    --container-bg: #ffffff;
+    --container-hover: #f5f5f5;
+    --border-color: #ddd;
+    --input-bg: #e9ecef;
+    --input-border: #ccc;
+    --focus-border: #007bff;
+    --text-muted: #6c757d;
+    --text-subtle: #555;
+    --title-color: #0056b3;
+    --completed-text: #888;
+}
+
+/* Estilo general del cuerpo de la página */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.5; /* Más compacto */
+    background-color: var(--bg-color);
+    color: var(--text-color);    
+    min-height: 100vh;
+    /* CAMBIO: Volvemos a centrar el contenido principal */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 20px; /* Reducimos el padding superior */
+    padding-bottom: 60px; /* Espacio para la barra inferior */
+    box-sizing: border-box;
+}
+
+/* Título principal */
+h1 {
+    text-align: center;
+    color: var(--text-color);    
+    font-size: 1.6em; /* 💡 Título más pequeño */
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* Contenedor principal del gestor */
+.container {
+    width: 600px; /* 💡 Contenedor más estrecho */
+    box-sizing: border-box;
+    margin: 0; /* Quitamos el margen lateral, flexbox se encarga de centrar */
+    /* NUEVO: Asegura que no se encoja */
+    flex-shrink: 0;
+}
+
+/* Sección del formulario (input y botón agregar) */
+.search {
+    margin-bottom: 15px;
+    background-color: var(--container-bg);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+/* Formulario: ahora es más compacto */
+form {
+    display: flex;
+    gap: 8px; /* Reducimos el espacio */
+    align-items: center;
+}
+
+/* Estilo del campo de texto */
+input[type='text'], #task-priority, input[type='date'] {
+    padding: 10px 12px; /* Reducción de padding */
+    border: 1px solid var(--input-border);
+    border-radius: 4px; /* Ligeramente más pequeño */
+    font-size: 0.95em; /* Ligeramente más pequeña */
+    outline: none;
+    transition: border-color 0.3s ease;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    box-sizing: border-box; /* Fundamental para el flexbox */
+}
+
+input[type='text'] {
+    flex-grow: 1;
+}
+
+input[type='date'] {
+    width: 150px; /* Ancho fijo para la fecha */
+    text-align: center;
+    font-variant-numeric: tabular-nums; /* Alinea los números del datepicker */
+    cursor: pointer;
+}
+
+input[type='text']:focus, #task-priority:focus, input[type='date']:focus {
+    border-color: var(--focus-border);
+}
+
+/* Estilo para el selector de prioridad */
+#task-priority {
+    width: 120px; /* Ancho fijo */
+    cursor: pointer;
+}
+
+
+/* Contenedor de la lista */
+.li-container {
+    padding: 0;
+    margin-top: 20px;
+}
+
+/* Quita el espaciado interno de la lista */
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+/* Estilo de cada tarea (elemento <li>) */
+li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    background-color: var(--container-bg);
+    padding: 10px 12px; /* Más compacto */
+    border: 1px solid var(--border-color);
+    border-radius: 6px; /* Más compacto */
+    margin-bottom: 8px; /* Reducción de margen */
+    gap: 8px; /* Reducción de gap */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border-left: 6px solid transparent; /* Ligeramente más delgado */
+}
+
+li:last-child {
+    margin-bottom: 0;
+}
+
+li:hover {
+    background-color: var(--container-hover);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* --- INDICADORES DE PRIORIDAD --- */
+li.priority-high { border-left-color: #e74c3c; }
+li.priority-medium { border-left-color: #f39c12; }
+li.priority-low { border-left-color: #2ecc71; }
+
+/* Etiqueta de Prioridad y Fecha de Vencimiento */
+.task-priority-label, .task-due-date {
+    font-size: 0.75em; /* Más pequeño */
+    font-weight: bold;
+    color: var(--text-subtle);
+    padding: 2px 4px;
+    border-radius: 3px;
+    background-color: var(--border-color);
+    white-space: nowrap;
+}
+.task-due-date {
+    background-color: #4a90e2; /* Nuevo color para fecha */
+    color: #fff;
+}
+li.overdue .task-due-date {
+    background-color: #c0392b; /* Rojo para vencido */
+}
+
+
+/* Estilo para el texto de la tarea (span) */
+.task-text {
+    flex-grow: 1;
+    min-width: 0;
+    white-space: normal;
+    font-size: 1.0em; /* Ligeramente más pequeña */
+    color: var(--text-color);
+}
+
+/* Estilo para la fecha/timestamp de creación (oculto en móvil) */
+.task-date {
+    font-size: 0.7rem; /* Más pequeño */
+    color: var(--text-muted);
+    margin-left: auto;
+    white-space: nowrap;
+    opacity: 0.8;
+}
+
+/* Estilo del checkbox */
+.task-checkbox {
+    margin-right: 5px;
+    transform: scale(1.1); /* Ligeramente más pequeño */
+    cursor: pointer;
+}
+
+/* Estilos para la tarea completada */
+li.completed .task-text {
+    text-decoration: line-through;
+    color: var(--completed-text);
+    font-style: italic;
+}
+
+li.completed .task-checkbox {
+    accent-color: #2ecc71;
+}
+
+/* Botones de acción (Eliminar, Editar, Nota) más compactos */
+.btn-delete, .btn-edit, .btn-note {
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px; /* Más compacto */
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 0.8em; /* Fuente más pequeña */
+    line-height: 1;
+    min-width: 60px; /* Ancho mínimo reducido */
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+.btn-delete { background-color: #e74c3c; color: white; }
+.btn-delete:hover { background-color: #c0392b; }
+
+.btn-edit { background-color: #f39c12; color: white; }
+.btn-edit:hover { background-color: #d35400; }
+
+.btn-note { background-color: #3498db; color: white; }
+.btn-note:hover { background-color: #2980b9; }
+
+/* Estilo del botón "Agregar" */
+.btn-add {
+    padding: 10px 18px; /* Compacto y alineado con los inputs */
+    border: none;
+    color: white;
+    font-weight: bold;
+    background-color: #2ecc71;
+    font-size: 0.95em;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-add:hover {
+    background-color: #27ae60;
+}
+
+/* Botones de ordenamiento */
+/* CAMBIO: Ahora es un panel de herramientas vertical a la izquierda */
+.sort-buttons {
+    position: fixed;
+    left: 25px; /* Alineado simétricamente con la barra lateral derecha */
+    top: 20px; /* Lo posicionamos arriba, alineado con el padding del body */
+    transform: none; /* Quitamos el centrado vertical */
+    display: flex;
+    flex-direction: column; /* Apilado vertical */
+    gap: 8px; /* Más compacto */
+    z-index: 100;
+    /* 💡 NUEVO: Estilos de panel */
+    background-color: var(--container-bg);
+    padding: 12px; /* Padding reducido */
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* 💡 NUEVO: Estilo para el título "Herramientas" */
+.sort-buttons h3 {
+    color: var(--title-color);
+    font-size: 0.8em; /* Título más pequeño */
+    text-align: center;
+    margin: 0 0 5px 0; /* Limpia margen por defecto y añade espacio abajo */
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.sort-buttons button {
+    background-color: #065c63;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px; /* Botones más pequeños */
+    cursor: pointer;
+    font-size: 0.8em; /* Fuente más pequeña */
+    transition: background-color 0.2s ease;
+    width: 110px; /* Ancho reducido */
+}
+
+.sort-buttons button:hover {
+    background-color: #7f8c8d;
+}
+
+/* Mensaje cuando no hay tareas */
+.empty {
+    text-align: center;
+    color: var(--text-muted);
+    margin-top: 20px;
+    font-style: italic;
+    font-size: 1.0em;
+}
+
+/* --- ESTILOS: Contadores (task-stats) - Mantenemos la posición superior derecha */
+.task-stats {
+    /* CAMBIO: Ahora es parte del flujo normal de la barra lateral */
+    display: flex;
+    gap: 20px;
+    padding: 10px 15px;
+    border-radius: 6px;
+    background-color: var(--container-bg);
+    font-weight: bold;
+    color: var(--text-subtle);
+    font-size: 0.9em; /* Más pequeño */
+    border: 1px solid var(--border-color);
+}
+
+.task-stats strong {
+    color: #2ecc71;
+}
+
+.completed-link {
+    text-decoration: none;
+    color: var(--text-subtle);
+    transition: color 0.2s ease;
+}
+
+.completed-link:hover {
+    color: #2ecc71;
+}
+
+.completed-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+/* --- NUEVO: Estilos para la barra inferior de widgets (Alineación a la IZQUIERDA) --- */
+
+@keyframes slideInFromBottom {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.data-widgets {
+    position: fixed;
+    bottom: 0;
+    left: 0; /* Lo movemos al borde izquierdo */
+    width: auto;
+    display: flex;
+    gap: 15px; /* Más compacto */
+    background-color: var(--container-bg);
+    padding: 8px 15px;
+    border-top: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color); /* Solo borde derecho y superior */
+    border-top-right-radius: 8px; /* Solo borde superior derecho redondeado */
+    z-index: 1000;
+    animation: slideInFromBottom 0.6s ease-out forwards;
+}
+
+.widget {
+    display: flex;
+    align-items: center;
+    gap: 6px; /* Más compacto */
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    width: auto;
+}
+
+.widget h3 {
+    margin: 0;
+    font-size: 0.85em; /* Más pequeño */
+    color: var(--title-color);
+    font-weight: 400;
+}
+
+.widget p {
+    margin: 0;
+    font-size: 0.9em; /* Más pequeño */
+    font-weight: bold;
+    color: #2ecc71;
+}
+
+/* --- NUEVO: Estilos para el interruptor de tema --- */
+.theme-switcher-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding: 8px;
+    background-color: var(--container-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.theme-switcher {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.theme-switcher input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 26px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+/* --- NUEVO: Estilos para la barra lateral derecha --- */
+/* CAMBIO: La barra lateral ahora está fija a la derecha */
+.sidebar {
+    position: fixed;
+    right: 25px;
+    top: 20px; /* Alineado con el padding superior del body */
+    width: 300px; /* Ancho fijo para la barra lateral */
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espacio entre el contador y el calendario */
+    z-index: 100;
+}
+
+/* Contenedor principal del calendario (ahora en la barra lateral) */
+#calendar-container {
+    width: 100%; /* Ocupa todo el ancho de la barra lateral */
+    padding: 15px;
+    background-color: var(--container-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+/* --- NUEVO: ESTILOS DEL CALENDARIO SIMPLE --- */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    color: #4a90e2;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+}
+
+.calendar-day-header {
+    font-weight: bold;
+    color: var(--text-subtle);
+    font-size: 0.8em;
+    padding: 5px 0;
+}
+
+.calendar-day {
+    padding: 6px;
+    border-radius: 4px;
+    background-color: var(--input-bg);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 0.85em;
+    color: var(--text-color);
+    height: 30px; /* Altura fija para la compacidad */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.calendar-day:hover {
+    background-color: var(--container-hover);
+}
+
+.calendar-day.empty-day {
+    background-color: transparent;
+    cursor: default;
+    color: var(--border-color);
+}
+
+.calendar-day.today {
+    border: 2px solid var(--focus-border);
+}
+
+/* Indicador de Tareas (el punto) */
+.task-indicator {
+    height: 4px;
+    width: 4px;
+    background-color: #e74c3c; /* Rojo para indicar tarea */
+    border-radius: 50%;
+    margin-top: 3px;
+}
+
+/* Estilos de responsividad para mantener la compacidad en móvil */
+@media (max-width: 768px) {
+    /* CAMBIO: En móvil, el layout vuelve a ser de una sola columna */
+    body {
+        flex-direction: column;
+        align-items: center;
+        padding-top: 10px;
+    }
+
+    .container {
+        width: 95%;
+        margin-top: 15px;
+        padding: 0 10px;
+    }
+
+    .task-stats {
+        /* CAMBIO: Se muestra como una barra de estadísticas */
+        order: -2; /* Lo mueve antes del container */
+        width: 95%;
+        justify-content: space-around;
+    }
+
+    .theme-switcher-container {
+        order: -3; /* Lo mueve arriba de todo en móvil */
+        width: auto;
+        margin: 0 auto 15px auto;
+
+    }
+
+    /* CAMBIO: La barra lateral y el panel de herramientas vuelven al flujo normal */
+    .sidebar {
+        position: static;
+        width: 95%;
+        margin-left: 0;
+        order: -1; /* Mueve el calendario justo debajo de las estadísticas */
+    }
+
+    .sort-buttons {
+        position: static;
+        transform: none;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        margin: 15px 0;
+    }
+    #calendar-container {
+        margin-bottom: 15px;
+    }
+
+    .data-widgets {
+        left: 0;
+        width: 100%;
+        justify-content: space-around;
+        gap: 10px;
+        border-radius: 0;
+        padding: 8px 0;
+    }
+
+    h1 { font-size: 1.6em; }
+
+    form { flex-direction: column; gap: 8px; }
+
+    input[type='text'], #task-priority, input[type='date'], .btn-add {
+        width: 100%;
+    }
+
+    /* Reducimos el tamaño de los botones en móvil */
+    .sort-buttons button, .btn-delete, .btn-edit, .btn-note {
+        font-size: 0.75em;
+        padding: 5px 10px;
+        min-width: unset;
+    }
+    .sort-buttons { flex-wrap: wrap; }
+
+    /* Ocultamos elementos menos críticos para ahorrar espacio en li */
+    li .task-date { display: none; }
+}
+
+/* --- NUEVO: Estilos para la página de Login --- */
+
+.login-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #1d2b4a, #000000);
+}
+
+.login-container {
+    width: 350px;
+    padding: 40px;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.login-container h1 {
+    margin-bottom: 30px;
+    color: #e0e0e0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #a2b9d1;
+    font-size: 0.9em;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    background-color: #222;
+    border: 1px solid #555;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.error-message {
+    color: #e74c3c;
+    margin-top: 15px;
+    height: 20px;
+    font-size: 0.9em;
+}
+
+.login-footer {
+    margin-top: 25px;
+    font-size: 0.9em;
+    color: #888;
+}
+
+.login-footer a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+.btn-back {
+    padding: 10px 18px;
+    text-decoration: none;
+    color: white;
+    background-color: #3498db;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+/* --- NUEVO: Estilo para el botón de ir a tareas completadas --- */
+.btn-view-completed {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: #3498db; /* Un azul para navegación */
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.9em;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease;
+}
+
+.btn-view-completed:hover {
+    background-color: #2980b9;
+}
+
+.main-image {
+    max-width: 220px;
+    display: block;
+    margin: 0 auto 15px;
+}

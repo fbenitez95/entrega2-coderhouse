@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Tareas Avanzado y Agenda</title>
+
+    <!-- Estilos principales -->
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+         Widgets + Herramientas
+    ========================== -->
+    <header>
+
+        <!-- Widgets informativos -->
+        <section class="data-widgets">
+            <div id="dollar-widget" class="widget">
+                <h3>📈 Dólar Hoy</h3>
+                <p id="dollar-price">Cargando...</p>
+            </div>
+
+            <div id="weather-widget" class="widget">
+                <h3>☀️ Clima</h3>
+                <p id="weather-info">Cargando...</p>
+            </div>
+        </section>
+
+        <!-- Navegación de ordenamiento -->
+        <nav class="sort-buttons">
+            <h3>Ordenar por</h3>
+            <button id="sort-oldest" title="Ordenar por más antiguas">Más antiguas</button>
+            <button id="sort-newest" title="Ordenar por más recientes">Más recientes</button>
+            <button id="sort-priority" title="Ordenar por prioridad">Prioridad</button>
+            <button id="sort-due-date" title="Ordenar por vencimiento">Vencimiento</button>
+        </nav>
+
+    </header>
+
+    <!-- =========================
+         MAIN
+         Contenido principal
+    ========================== -->
+    <main>
+        <img 
+            src="./assets/img/img-colaboracion.png" 
+            alt="imagen que acompaña al gestor de tareas" 
+            class="main-image">
+        <section class="container">
+
+            <h1>Gestor de Tareas y Agenda</h1>
+
+            <!-- Formulario de carga -->
+            <section class="search">
+                <form>
+                    <input type="text" id="task-input" placeholder="Agregar nueva tarea..." required>
+
+                    <input type="date" id="due-date-input" title="Fecha de vencimiento">
+
+                    <select id="task-priority">
+                        <option value="medium">Media</option>
+                        <option value="high">Alta</option>
+                        <option value="low">Baja</option>
+                    </select>
+
+                    <button type="submit" class="btn-add">Agregar</button>
+                </form>
+            </section>
+
+            <!-- Listado de tareas -->
+            <section class="li-container">
+                <ul>
+                    <!-- Las tareas se insertan dinámicamente -->
+                </ul>
+            </section>
+
+            <!-- Mensaje vacío -->
+            <section class="empty">
+                <p>No tienes tareas pendientes</p>
+            </section>
+
+        </section>
+
+    </main>
+
+    <!-- =========================
+         ASIDE
+         Contenido lateral
+    ========================== -->
+    <aside class="sidebar">
+
+        <!-- Interruptor de tema -->
+        <section class="theme-switcher-container">
+            <span>☀️</span>
+            <label class="theme-switcher">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider"></span>
+            </label>
+            <span>🌙</span>
+        </section>
+
+        <!-- Estadísticas -->
+        <section class="task-stats">
+            <span>Pendientes: <strong id="pending-count">0</strong></span>
+            <span>Completadas: <strong id="completed-count">0</strong></span>
+        </section>
+
+        <!-- Navegación secundaria -->
+        <nav>
+            <a href="./pages/completed.html" class="btn-view-completed">
+                Ir a Tareas Completadas
+            </a>
+        </nav>
+
+        <!-- Calendario -->
+        <section id="calendar-container">
+            <div class="calendar-header">
+                <button id="prev-month-btn">&lt;</button>
+                <span id="current-month-year"></span>
+                <button id="next-month-btn">&gt;</button>
+            </div>
+
+            <div id="calendar-days" class="calendar-days"></div>
+        </section>
+
+    </aside>
+
+    <!-- Scripts -->
+    <script src="./js/script.js"></script>
+
+</body>
+</html>

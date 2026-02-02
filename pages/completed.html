@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tareas Completadas</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+         Widgets + Herramientas
+    ========================== -->
+    <header>
+
+        <!-- Widgets informativos -->
+        <section class="data-widgets">
+            <div id="dollar-widget" class="widget">
+                <h3>📈 Dólar Hoy</h3>
+                <p id="dollar-price">Cargando...</p>
+            </div>
+
+            <div id="weather-widget" class="widget">
+                <h3>☀️ Clima</h3>
+                <p id="weather-info">Cargando...</p>
+            </div>
+        </section>
+
+    </header>
+
+    <!-- =========================
+         MAIN
+         Contenido principal
+    ========================== -->
+    <main>
+
+        <section class="container">
+
+            <h1>Historial de Tareas Completadas</h1>
+
+            <!-- Acciones -->
+            <section class="completed-actions">
+                <a href="../index.html" class="btn-back">← Volver al Gestor</a>
+                <button id="clear-all-completed" class="btn-delete">
+                    Limpiar Historial
+                </button>
+            </section>
+
+            <!-- Lista de tareas completadas -->
+            <section class="li-container">
+                <ul>
+                    <!-- Las tareas completadas se insertan dinámicamente -->
+                </ul>
+            </section>
+
+            <!-- Mensaje vacío -->
+            <section class="empty">
+                <p>Aún no has completado ninguna tarea.</p>
+            </section>
+
+        </section>
+
+    </main>
+
+    <!-- =========================
+         ASIDE
+         Contenido lateral
+    ========================== -->
+    <aside class="sidebar">
+
+        <!-- Interruptor de tema -->
+        <section class="theme-switcher-container">
+            <span>☀️</span>
+            <label class="theme-switcher">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider"></span>
+            </label>
+            <span>🌙</span>
+        </section>
+
+        <!-- Navegación secundaria -->
+        <nav>
+            <a href="../index.html" class="btn-view-completed">
+                Volver al Gestor
+            </a>
+        </nav>
+
+    </aside>
+
+    <!-- Scripts -->
+    <script src="../js/script.js"></script>
+
+</body>
+</html>
